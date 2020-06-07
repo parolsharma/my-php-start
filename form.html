@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form class="form" id="myForm">
+		
+		<label>Name:</label>
+		<input type="text" name="name" id="name">
+		<br><br>
+		<label>Password:</label>
+		<input type="text" name="pwd" id="pwd">
+		<br><br>
+		<input type="submit">
+
+	</form>
+
+<div id="data">
+
+</div>
+
+
+	<script>
+		const myForm = document.getElementById('myForm');
+
+		myForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			console.log(e);
+
+		const formData = new FormData(this);
+
+		fetch('form.php', {
+
+			method:'post',
+			body:formData
+
+
+		}). then(function (response) {
+
+			return response.text();
+		}).then(function (text) {
+             console.log(text);
+			 getuser();
+		}).catch(function (error) {
+				console.error(error);
+		});
+
+		});
+
+
+
+
+		function getuser(){
+			fetch('http://localhost/getRecord.php', {
+				headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+			method:'get',
+		
+
+
+			}). then(function (response) {
+
+			return response.text();
+			}).then(function (text) {
+			console.log(text);
+				document.getElementById('data').innerHTML = text;
+		
+			}).catch(function (error) {
+				console.error(error);
+			});
+			
+		}
+		getuser();
+		</script>
+</body>
+</html>
